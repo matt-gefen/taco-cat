@@ -75,10 +75,56 @@ function edit(req, res) {
   })
 }
 
+function update(req, res) {
+  Taco.findById(req.params.id)
+  .then(taco => {
+    if (taco.owner.equals(req.user.profile._id)) {
+      req.body.tasty = !!req.body.tasty
+      // this matters for react
+      taco.update(req.body, {new: true})
+      .then(() => {
+        res.redirect(`/tacos/${taco._id}`)
+        }
+      )
+    }
+    else {
+      // the person that created the taco isn't the editor
+      throw new Error ('You dont own this taco')
+    }
+  })
+  // new true ensures that the taco grabbed here is the new version of the taco
+  .catch((error) => {
+    res.redirect(`/tacos`)
+  }
+  )
+  
+}
+
+function deleteTaco(req, res) {
+  Taco.findById(req.params.id) 
+  .then(taco => {
+    if (taco.owner.equals(req.user.profile._id)) {
+      taco.delete()
+      .then(() => {
+        res.redirect("/tacos")
+      })
+    }
+    else {
+      throw new Error ("You don't own this taco")
+    }
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/tacos")
+  })
+}
+
 export {
   index,
   create,
   show,
   flipTasty,
-  edit
+  edit,
+  update,
+  deleteTaco as delete
 }

@@ -9,6 +9,8 @@ router.post('/', isLoggedIn, tacosCtrl.create)
 router.get('/:id', tacosCtrl.show)
 router.patch('/:id/flip-tasty', isLoggedIn, tacosCtrl.flipTasty)
 router.get('/:id/edit', tacosCtrl.edit)
+router.put('/:id', tacosCtrl.update)
+router.delete('/:id', isLoggedIn, tacosCtrl.delete)
 
 export {
   router
