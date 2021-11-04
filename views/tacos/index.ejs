@@ -1,0 +1,26 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <h1><%= title %> </h1>
+  <% if (user) { %>
+    <h2>Add a Taco!</h2>
+    <form action='/tacos/' method="POST">
+    <label>
+      Name: <input type="text" name='name' autocomplete="off">
+    </label><br>
+    <label>
+      Is This Tasty?<input type="checkbox" name="tasty" checked>
+    </label><br>
+    <button type="submit">🌮</button>
+    </form>
+  <% } %> 
+  <h2>All The Tacos!</h2>
+  <ul>
+    <% tacos.forEach( taco => { %>
+      <li>🌮 <%= taco.name %> is <%= taco.tasty ? "tasty" : "not tasty" %></li>
+    <% }) %>
+  </ul>
+</main>
+
+<%- include('../partials/footer') %>
