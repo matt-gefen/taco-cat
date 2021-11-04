@@ -1,0 +1,20 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <section>
+    <h1>Edit <%= taco.name %> 🌮</h1>
+    <form action="/tacos/<%=taco._id%>?_method=PUT" method="POST"> 
+      <label>
+        Name: <input type="text" name='name' value="<%=taco.name%>" autocomplete="off">
+      </label><br>
+      <label>
+        Is This Tasty?
+        <input type="checkbox" name="tasty" <%=taco.tasty? "checked" : ""%>>
+      </label><br>
+      <button type="submit">Edit 🌮</button>
+    </form>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

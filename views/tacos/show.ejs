@@ -16,6 +16,11 @@
         </button>
       </form>
     <% } %>
+    <% if (taco.owner.equals(user?.profile._id)) { %>
+    <form action="/tacos/<%-taco.id%>/edit" method='GET'>
+      <button class='btn' type='submit'>Edit this taco 🌮🚧</button>
+    </form>
+    <% } %>
   </section>
 </main>
 
