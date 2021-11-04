@@ -14,8 +14,6 @@ function index(req, res) {
   })
 }
 function show(req, res) {
-  console.log('NOW SHOWING')
-  console.log(req.params.id)
   Profile.findById(req.params.id)
   .then(profile => {
     Profile.findById(req.user.profile._id)
@@ -35,7 +33,40 @@ function show(req, res) {
   })
 }
 
+function createCat(req, res) {
+  Profile.findById(req.user.profile._id)
+  .then(profile => {
+    profile.cats.push(req.body)
+    profile.save()
+  })
+  .then(() => {
+    res.redirect(`/profiles/${req.user.profile._id}`)
+  })
+  .catch(error => {
+    console.log(error)
+    res.redirect(`/profiles/${req.user.profile._id}`)
+  })
+}
+
+function deleteCat(req, res) {
+  // console.log('be free')
+  Profile.findById(req.user.profile._id)
+  .then(profile => {
+    profile.cats.remove({_id: req.params.id})
+    profile.save()
+  })
+  .then(() => {
+    res.redirect(`/profiles/${req.user.profile._id}`)
+  })
+  .catch(error => {
+    console.log(error)
+    res.redirect(`/profiles/${req.user.profile._id}`)
+  })
+}
+
 export {
   index,
-  show
+  show,
+  createCat,
+  deleteCat
 }

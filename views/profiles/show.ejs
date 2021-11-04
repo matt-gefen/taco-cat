@@ -12,6 +12,49 @@
     </div>
   <% } %>
   <h1>It's <%= isSelf ? "you" : profile.name %>!</h1>
+  <% if (isSelf) { %>
+    <h2>Add 😺😸</h2>
+  <form action="/profiles/<%=profile._id%>/cats" method="post">
+    <label>
+      Name: 
+      <input type="text" name='name' autocomplete="off">
+    </label><br>
+    <label>
+      Age: 
+      <input type="number" name='age' autocomplete="off">
+    </label><br>
+    <label>
+      Breed: 
+      <input type="text" name='breed' autocomplete="off">
+    </label><br>
+    <button type="submit">Add 😺</button>
+  </form>
+  <% } %>
+  <% if (profile.cats.length) { %>
+  <h2>
+    <%= isSelf ? "You have" : `${profile.name} has` %> cats! Here they are!
+  </h2>
+  <% profile.cats.forEach(cat => { %>
+    <h3>
+      <%= getRandomCat() %> 
+      <%= cat.name %> is a <%= cat.age %> year old <%= cat.breed %>
+      <% if (isSelf) { %>
+      <form action="/profiles/cats/<%=cat._id%>?_method=DELETE" method='post'>
+      <button type='submit'>Free <%=cat.name%>🙀</button>
+      </form>
+      <% } %>
+    </h3>
+  <% }) %>
+<% } else { %>
+  <h2>
+    <%= isSelf ? "You don't" : `${profile.name} doesn't` %> have any cats.
+  </h2> 
+<% } %> 
 </main>
+
+<% function getRandomCat() { %>
+  <% let cats = ["🐈", "🐱", "😸", "😹", "😺", "😻", "😼", "😾", "😿", "🙀"] %>
+  <% return cats[Math.floor(Math.random() * cats.length)] %>
+<% } %>
 
 <%- include('../partials/footer') %>
